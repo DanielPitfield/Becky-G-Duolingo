@@ -9,10 +9,7 @@ setInterval(() => {
   );
 
   Array.from(cartoonImages)
-    .filter(
-      (image) =>
-        image.getAttribute("data-is-image-replaced") === null
-    )
+    .filter((image) => image.getAttribute("data-is-image-replaced") === null)
     .forEach((image) => {
       const newImage = document.createElement("img");
       newImage.src = beckyURL;
@@ -21,6 +18,6 @@ setInterval(() => {
 
       newImage.setAttribute("data-is-image-replaced", "true");
       image.parentNode.replaceChild(newImage, image);
-
+      console.log("image replaced");
     });
-}, 1000);
+}, 100);
