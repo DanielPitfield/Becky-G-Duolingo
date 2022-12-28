@@ -14,6 +14,8 @@ const cartoonImageClassNames = [
   "F2B9m > div",
   // Loading level
   "_3a8EI._1S4zC",
+  // Review reminders
+  "_3a8EI._2IFQ2"
 ];
 
 cartoonImageClassNames.forEach((className) => {
