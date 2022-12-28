@@ -1,9 +1,15 @@
 const beckyURL =
   "http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcRmdUSBTYpAWbhsIYZB2ljhdlWmaBX-7bcUGqmf_Ri0Yhg_5Kucfm4YEDhiehMNJFf4qmPAvh1JKDQaA_w";
 
-setInterval(() => {
-  const cartoonImageClassNames = ["_1_6GB", "_1cRje", "F2B9m > div"];
+const cartoonImageClassNames = ["_1_6GB", "_1cRje", "F2B9m > div"];
 
+cartoonImageClassNames.forEach((className) => {
+  const styleElement = document.createElement("style");
+  styleElement.textContent = `.${className}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
+  document.head.appendChild(styleElement);
+});
+
+setInterval(() => {
   const cartoonImages = document.querySelectorAll(
     cartoonImageClassNames.map((name) => `.${name}`).join(",")
   );
