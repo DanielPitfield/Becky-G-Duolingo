@@ -1,9 +1,9 @@
-import { targetClassNames, getRandomBeckyGImageURL } from "./data";
+import { targetCssSelectors, getRandomBeckyGImageURL } from "./data";
 
 // Hide all images that have the target classNames (until they are replaced)
-targetClassNames.forEach((className) => {
+targetCssSelectors.forEach(({ cssSelector: classCssSelector }) => {
   const styleElement = document.createElement("style");
-  styleElement.textContent = `.${className}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
+  styleElement.textContent = `${classCssSelector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
   document.head.appendChild(styleElement);
 });
 
@@ -22,7 +22,7 @@ function createImage(): HTMLImageElement {
 function replaceImages() {
   // Get all the elements with the target classNames
   const targetImages: NodeListOf<Element> = document.querySelectorAll(
-    targetClassNames.map((name) => `.${name}`).join(",")
+    targetCssSelectors.join(",")
   );
 
   // Only the image elements which haven't already been replaced
