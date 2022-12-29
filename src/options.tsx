@@ -1,11 +1,11 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { targetCssSelectors } from "./data";
+import { targetSelectors } from "./data";
 
 const Options = () => {
   return (
     <div className="options">
-      {targetCssSelectors.map(({ label }) => (
+      {targetSelectors.map(({ label }) => (
         <label key={label} className="option">
           {label}
           <input type="checkbox" className="option-checkbox" />

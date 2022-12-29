@@ -1,3 +1,5 @@
+type TargetSelector = { selector: string; label: string };
+
 const beckyImages: string[] = [
   chrome.runtime.getURL("images/becky1.jpg"),
   chrome.runtime.getURL("images/becky2.jpg"),
@@ -14,10 +16,10 @@ export function getRandomBeckyGImageURL(): string {
   return beckyImages[randomIndex];
 }
 
-export const targetCssSelectors: { cssSelector: string; label: string }[] = [
-  { cssSelector: "._3a8EI._1cRje", label: "Right-side on path of level" },
-  { cssSelector: "._1cRje", label: "Left-side on path of level" },
-  { cssSelector: ".F2B9m > div", label: "Questions" },
-  { cssSelector: "._3a8EI._1S4zC", label: "Loading level" },
-  { cssSelector: "._3a8EI._2IFQ2", label: "Review reminders" },
+export const targetSelectors: TargetSelector[] = [
+  { selector: "._3a8EI._1cRje", label: "Right-side on path of level" },
+  { selector: "._1cRje", label: "Left-side on path of level" },
+  { selector: ".F2B9m > div", label: "Questions" },
+  { selector: "._3a8EI._1S4zC", label: "Loading level" },
+  { selector: "._3a8EI._2IFQ2", label: "Review reminders" },
 ];
