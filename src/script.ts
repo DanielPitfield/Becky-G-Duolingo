@@ -1,6 +1,6 @@
 import { targetSelectors, getRandomBeckyGImageURL } from "./data";
 
-// Hide all images that have the target classNames (until they are replaced)
+// Hide all image elements that match a CSS selector from targetSelectors (until they are replaced)
 targetSelectors.forEach(({ selector }) => {
   const styleElement = document.createElement("style");
   styleElement.textContent = `${selector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
@@ -20,9 +20,9 @@ function createImage(): HTMLImageElement {
 }
 
 function replaceImages() {
-  // Get all the elements with the target classNames
+  // Get all the elements that match a CSS selector from targetSelectors
   const targetImages: NodeListOf<Element> = document.querySelectorAll(
-    targetSelectors.join(",")
+    targetSelectors.map((x) => x.selector).join(",")
   );
 
   // Only the image elements which haven't already been replaced
