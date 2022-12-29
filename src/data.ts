@@ -1,4 +1,4 @@
-const beckyImages = [
+const beckyImages: string[] = [
   "http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcRmdUSBTYpAWbhsIYZB2ljhdlWmaBX-7bcUGqmf_Ri0Yhg_5Kucfm4YEDhiehMNJFf4qmPAvh1JKDQaA_w",
   "https://media1.popsugar-assets.com/files/thumbor/j2df4DKTYt_7evD8J3UEvDnZJkA/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2022/08/28/041/n/1922153/9bceaaaf612a51fc_GettyImages-1418876873/i/becky-g-makeup-mtv-vmas.jpg",
   "https://m.media-amazon.com/images/M/MV5BMTUzMjg0MjgxMF5BMl5BanBnXkFtZTgwMzkyNDM5NjE@._V1_.jpg",
@@ -10,7 +10,7 @@ export function getRandomBeckyGImage(): string {
   return beckyImages[randomIndex];
 }
 
-export const cartoonImageClassNames = [
+export const targetClassNames: string[] = [
   // Right side on path of level
   "_3a8EI._1cRje",
   // Left side on path of level
