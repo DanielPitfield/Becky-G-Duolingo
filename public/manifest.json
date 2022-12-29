@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+
+  "name": "Becky G Duolingo",
+  "version": "1.0.0",
+  "description": "Replace all the cartoony images on Duolingo with Becky G!",
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "action": {
+    "default_title": "Becky G Duolingo",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.duolingo.com/*"],
+      "js": ["js/vendor.js", "js/content_script.js"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background.js"
+  }
+}
