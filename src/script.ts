@@ -15,7 +15,7 @@ const cartoonImageClassNames = [
   // Loading level
   "_3a8EI._1S4zC",
   // Review reminders
-  "_3a8EI._2IFQ2"
+  "_3a8EI._2IFQ2",
 ];
 
 cartoonImageClassNames.forEach((className) => {
@@ -39,9 +39,11 @@ setInterval(() => {
       newImage.height = 150;
       newImage.style.borderRadius = "4em";
 
-      newImage.setAttribute("data-is-image-replaced", "true");
-      image.parentElement.style.cssText +=
-        "display: flex; align-items: center; justify-content: center;";
-      image.parentNode.replaceChild(newImage, image);
+      if (image.parentElement) {
+        newImage.setAttribute("data-is-image-replaced", "true");
+        image.parentElement.style.cssText +=
+          "display: flex; align-items: center; justify-content: center;";
+        image.parentElement.replaceChild(newImage, image);
+      }
     });
 }, 100);
