@@ -20,5 +20,12 @@
       "matches": ["*://*.duolingo.com/*"],
       "js": ["js/vendor.js", "js/content_script.js"]
     }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["*://*.duolingo.com/*"]
+    }
   ]
 }
