@@ -1,4 +1,4 @@
-import { cartoonImageClassNames, beckyImages } from "./data";
+import { cartoonImageClassNames, getRandomBeckyGImage } from "./data";
 
 // Hide all images that have the target classNames (until they are replaced)
 cartoonImageClassNames.forEach((className) => {
@@ -22,7 +22,7 @@ function replaceImages() {
     // Create an image element
     const newImage = document.createElement("img");   
     // Using a random Becky G image 
-    newImage.src = beckyImages[Math.floor(Math.random() * beckyImages.length)];
+    newImage.src = getRandomBeckyGImage()
     // Style the image
     newImage.width = 150;
     newImage.height = 150;
