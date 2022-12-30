@@ -4,8 +4,8 @@ import { targetSelectors } from "./data";
 
 const Options = () => {
   // All target selectors are enabled by default
-  const defaultTargetSelectorOptions = targetSelectors.map((x) => {
-    return { selectorLabel: x.label, isEnabled: true };
+  const defaultTargetSelectorOptions = targetSelectors.map(({ label }) => {
+    return { selectorLabel: label, isEnabled: true };
   });
 
   const [targetSelectorOptions, setTargetSelectorOptions] = useState<
@@ -68,7 +68,7 @@ const Options = () => {
                   // Update state with the new option
                   setTargetSelectorOptions([
                     ...targetSelectorOptions.filter(
-                      (item) => item.selectorLabel !== label
+                      (option) => option.selectorLabel !== label
                     ),
                     changedOption,
                   ]);
