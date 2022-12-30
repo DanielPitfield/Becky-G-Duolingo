@@ -28,5 +28,7 @@
       "matches": ["*://*.duolingo.com/*"],
       "resources": ["images/*"]
     }
-  ]
+  ],
+
+  "permissions": ["storage"]
 }
