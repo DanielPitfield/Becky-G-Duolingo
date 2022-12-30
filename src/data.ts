@@ -25,3 +25,8 @@ export const targetSelectors: TargetSelector[] = [
   { selector: "._145Ci._2WUmd", label: "Section test (start)" },
   { selector: "._1ualb._2AWAc", label: "Section test (end)" },
 ];
+
+// All target selectors are enabled by default
+export const defaultTargetSelectorOptions = targetSelectors.map(({ label }) => {
+  return { label, isEnabled: true };
+});

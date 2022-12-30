@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { targetSelectors } from "./data";
+import { defaultTargetSelectorOptions, targetSelectors } from "./data";
 
 const Options = () => {
-  // All target selectors are enabled by default
-  const defaultTargetSelectorOptions = targetSelectors.map(({ label }) => {
-    return { selectorLabel: label, isEnabled: true };
-  });
-
   const [targetSelectorOptions, setTargetSelectorOptions] = useState<
-    { selectorLabel: string; isEnabled: boolean }[]
+    { label: string; isEnabled: boolean }[]
   >(defaultTargetSelectorOptions);
 
   const [status, setStatus] = useState<string>("");
@@ -48,7 +43,7 @@ const Options = () => {
   function toggleOption(label: string) {
     // Find the option being changed in targetSelectorOptions
     const changedOption = targetSelectorOptions.find(
-      (option) => option.selectorLabel === label
+      (option) => option.label === label
     );
 
     // Toggle enabled status
@@ -58,7 +53,7 @@ const Options = () => {
       // Update state with the new option
       setTargetSelectorOptions([
         ...targetSelectorOptions.filter(
-          (option) => option.selectorLabel !== label
+          (option) => option.label !== label
         ),
         changedOption,
       ]);
@@ -75,7 +70,7 @@ const Options = () => {
               type="checkbox"
               className="option-checkbox"
               checked={targetSelectorOptions?.some(
-                (option) => option.selectorLabel === label && option.isEnabled
+                (option) => option.label === label && option.isEnabled
               )}
               onChange={() => toggleOption(label)}
             />
