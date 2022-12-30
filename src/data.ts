@@ -22,4 +22,6 @@ export const targetSelectors: TargetSelector[] = [
   { selector: ".F2B9m > div", label: "Questions" },
   { selector: "._3a8EI._1S4zC", label: "Loading level" },
   { selector: "._3a8EI._2IFQ2", label: "Review reminders" },
+  { selector: "._145Ci._2WUmd", label: "Section test (start)" },
+  { selector: "._1ualb._2AWAc", label: "Section test (end)" },
 ];
