@@ -25,22 +25,44 @@ const Options = () => {
     });
   }, []);
 
+  // Update status message to show options have been saved
+  function showConfirmation() {
+    setStatus("Options saved.");
+
+    // Clear status message
+    const id = setTimeout(() => {
+      setStatus("");
+    }, 1000);
+
+    return () => clearTimeout(id);
+  }
+
   // Saves options to chrome.storage
   function saveOptions() {
     chrome.storage.sync.set(
       { targetSelectorOptions: JSON.stringify(targetSelectorOptions) },
-      () => {
-        // Update status to let user know options were saved.
-        setStatus("Options saved.");
-
-        // Clear status message
-        const id = setTimeout(() => {
-          setStatus("");
-        }, 1000);
-
-        return () => clearTimeout(id);
-      }
+      showConfirmation
     );
+  }
+
+  function toggleOption(label: string) {
+    // Find the option being changed in targetSelectorOptions
+    const changedOption = targetSelectorOptions.find(
+      (option) => option.selectorLabel === label
+    );
+
+    // Toggle enabled status
+    if (changedOption) {
+      changedOption.isEnabled = !changedOption.isEnabled;
+
+      // Update state with the new option
+      setTargetSelectorOptions([
+        ...targetSelectorOptions.filter(
+          (option) => option.selectorLabel !== label
+        ),
+        changedOption,
+      ]);
+    }
   }
 
   return (
@@ -55,25 +77,7 @@ const Options = () => {
               checked={targetSelectorOptions?.some(
                 (option) => option.selectorLabel === label && option.isEnabled
               )}
-              onChange={() => {
-                // Find the option being changed in targetSelectorOptions
-                const changedOption = targetSelectorOptions.find(
-                  (option) => option.selectorLabel === label
-                );
-
-                // Toggle enabled status
-                if (changedOption) {
-                  changedOption.isEnabled = !changedOption.isEnabled;
-
-                  // Update state with the new option
-                  setTargetSelectorOptions([
-                    ...targetSelectorOptions.filter(
-                      (option) => option.selectorLabel !== label
-                    ),
-                    changedOption,
-                  ]);
-                }
-              }}
+              onChange={() => toggleOption(label)}
             />
           </label>
         ))}
