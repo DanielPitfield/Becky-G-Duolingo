@@ -1,28 +1,18 @@
-import { targetSelectors, getRandomBeckyGImageURL } from "./data";
+import { getEnabledTargetSelectors, createImage } from "./utils";
 
-// Hide all image elements that match a CSS selector from targetSelectors (until they are replaced)
-targetSelectors.forEach(({ selector }) => {
+// Hide all image elements that match an enabled CSS selector (until they are replaced)
+getEnabledTargetSelectors().forEach(({ selector }) => {
   const styleElement = document.createElement("style");
   styleElement.textContent = `${selector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
   document.head.appendChild(styleElement);
 });
 
-// Returns an image element (of a random Becky G image)
-function createImage(): HTMLImageElement {
-  const image: HTMLImageElement = document.createElement("img");
-
-  image.src = getRandomBeckyGImageURL();
-  image.width = 150;
-  image.height = 150;
-  image.style.borderRadius = "4em";
-
-  return image;
-}
-
 function replaceImages() {
-  // Get all the elements that match a CSS selector from targetSelectors
+  // Get all the elements that match an enabled CSS selector
   const targetImages: NodeListOf<Element> = document.querySelectorAll(
-    targetSelectors.map((x) => x.selector).join(",")
+    getEnabledTargetSelectors()
+      .map((x) => x.selector)
+      .join(",")
   );
 
   // Only the image elements which haven't already been replaced

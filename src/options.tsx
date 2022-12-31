@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { defaultTargetSelectorOptions, targetSelectors } from "./data";
+import { allTargetSelectors } from "./data";
 
 const Options = () => {
+  // All target selectors are enabled by default
+  const defaultTargetSelectorOptions = allTargetSelectors.map(({ label }) => {
+    return { label, isEnabled: true };
+  });
+
   const [targetSelectorOptions, setTargetSelectorOptions] = useState<
     { label: string; isEnabled: boolean }[]
   >(defaultTargetSelectorOptions);
@@ -52,9 +57,7 @@ const Options = () => {
 
       // Update state with the new option
       setTargetSelectorOptions([
-        ...targetSelectorOptions.filter(
-          (option) => option.label !== label
-        ),
+        ...targetSelectorOptions.filter((option) => option.label !== label),
         changedOption,
       ]);
     }
@@ -63,7 +66,7 @@ const Options = () => {
   return (
     <div>
       <div className="options">
-        {targetSelectors.map(({ label }) => (
+        {allTargetSelectors.map(({ label }) => (
           <label key={label} className="option">
             {label}
             <input

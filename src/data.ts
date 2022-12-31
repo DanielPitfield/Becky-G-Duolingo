@@ -1,6 +1,6 @@
-type TargetSelector = { selector: string; label: string };
+export type TargetSelector = { selector: string; label: string };
 
-const beckyImages: string[] = [
+export const beckyImages: string[] = [
   chrome.runtime.getURL("images/becky1.jpg"),
   chrome.runtime.getURL("images/becky2.jpg"),
   chrome.runtime.getURL("images/becky3.jpg"),
@@ -11,12 +11,7 @@ const beckyImages: string[] = [
   chrome.runtime.getURL("images/becky8.jpg"),
 ];
 
-export function getRandomBeckyGImageURL(): string {
-  const randomIndex: number = Math.floor(Math.random() * beckyImages.length);
-  return beckyImages[randomIndex];
-}
-
-export const targetSelectors: TargetSelector[] = [
+export const allTargetSelectors: TargetSelector[] = [
   { selector: "._3a8EI._1cRje", label: "Right-side on path of level" },
   { selector: "._1cRje", label: "Left-side on path of level" },
   { selector: ".F2B9m > div", label: "Questions" },
@@ -25,8 +20,3 @@ export const targetSelectors: TargetSelector[] = [
   { selector: "._145Ci._2WUmd", label: "Section test (start)" },
   { selector: "._1ualb._2AWAc", label: "Section test (end)" },
 ];
-
-// All target selectors are enabled by default
-export const defaultTargetSelectorOptions = targetSelectors.map(({ label }) => {
-  return { label, isEnabled: true };
-});
