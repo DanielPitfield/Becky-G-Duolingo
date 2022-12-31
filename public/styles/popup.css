@@ -1,0 +1,18 @@
+.wrapper {
+  font-size: 16px;
+  font-family: inherit;
+  padding: 1em;
+}
+
+.status {
+  color: red;
+}
+
+.status[data-is-target-url="true"] {
+  color: green;
+}
+
+.description,
+.becky-quote {
+  padding: 1em 0;
+}
