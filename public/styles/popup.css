@@ -1,10 +1,16 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
   font-size: 16px;
   font-family: inherit;
   padding: 1em;
 }
 
 .status {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
   color: red;
 }
 
@@ -14,5 +20,7 @@
 
 .description,
 .becky-quote {
-  padding: 1em 0;
+  display: flex;
+  justify-content: center;
+  padding: 0.5em 0;
 }
