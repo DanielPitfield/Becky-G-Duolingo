@@ -1,0 +1,14 @@
+.options {
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.option {
+  display: flex;
+  margin:  0 0.5em 0.5em;
+}
+
+.option-checkbox {
+  margin-left: 0.4em;
+  padding: 0.4em;
+}
