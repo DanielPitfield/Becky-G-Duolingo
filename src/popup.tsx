@@ -57,7 +57,7 @@ const Popup = () => {
         </button>
       )}
 
-      <img src={beckyImageURL.current} width={300} height={300} />
+      <img src={beckyImageURL.current} width={300} />
       <div className="becky-quote">{quote}</div>
     </div>
   );
