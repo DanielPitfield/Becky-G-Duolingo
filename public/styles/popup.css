@@ -11,7 +11,8 @@
   display: flex;
   justify-content: center;
   font-weight: bold;
-  color: #db1f1f;
+  color: #a5a5a5;
+  background-color: #f0f0f0;
   cursor: default;
   user-select: none;
   padding: 0.6em 1em;
@@ -20,6 +21,11 @@
 
 .status[data-is-target-url="true"] {
   color: #5cb45c;
+  background-color: #f0fae7;
+}
+
+button {
+  margin-top: 0;
 }
 
 img {
@@ -33,12 +39,17 @@ img {
 .becky-quote {
   display: flex;
   justify-content: center;
-  padding: 0.5em 0;
-}
-
-.becky-quote {
-  background-color: #fdfdfd;
+  padding: 0.8em;
   box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
   cursor: default;
   user-select: none;
+  background-color: #fdfdfd;
+}
+
+.description {
+  margin-bottom: 1em;
+}
+
+.becky-quote {  
+  background-color: #fdfdfd;
 }
