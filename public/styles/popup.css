@@ -18,6 +18,13 @@
   color: green;
 }
 
+.navigate-button {
+  border: none;
+  background-color: rgb(113, 165, 207);
+  font-family: inherit;
+  padding: 0.4em;
+}
+
 .description,
 .becky-quote {
   display: flex;

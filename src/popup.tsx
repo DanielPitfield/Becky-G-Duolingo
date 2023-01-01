@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { beckyImages } from "./data";
 
 const Popup = () => {
-  const TARGET_URL = "duolingo.com";
+  const TARGET_URL = "https://www.duolingo.com";
   const [currentURL, setCurrentURL] = useState<string>("");
 
   useEffect(() => {
@@ -12,16 +12,19 @@ const Popup = () => {
     });
   }, []);
 
+  // Is the active tab Duolingo?
+  const isTargetURL = currentURL.startsWith(TARGET_URL);
+
   function getContent(): {
     status: string;
     description: string;
     quote: string;
   } {
     // Current tab is Duolingo
-    if (currentURL.includes(TARGET_URL)) {
+    if (isTargetURL) {
       return {
         status: "Active",
-        description: "Replacing cartoony images on Duolingo with Becky G!",
+        description: "Replacing images with Becky G!",
         quote: "Vamos! No hay garantía aqui, pero yo creo en ti!",
       };
     }
@@ -38,13 +41,21 @@ const Popup = () => {
 
   return (
     <div className="wrapper">
-      <div
-        className="status"
-        data-is-target-url={currentURL.includes(TARGET_URL)}
-      >
+      <div className="status" data-is-target-url={isTargetURL}>
         {status}
       </div>
-      <div className="description">{description}</div>
+
+      {isTargetURL ? (
+        <div className="description">{description}</div>
+      ) : (
+        <button
+          className="navigate-button"
+          onClick={() => chrome.tabs.create({ url: TARGET_URL })}
+        >
+          {description}
+        </button>
+      )}
+
       <img src={beckyImages[0]} width={300} height={300} />
       <div className="becky-quote">{quote}</div>
     </div>
