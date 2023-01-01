@@ -21,11 +21,12 @@
 .navigate-button {
   display: flex;
   align-items: center;
-  background-color: #083861;
+  background-color: #28659b;
+  color: white;
   border: none;
   box-shadow: -0.15em 0.15em 0 #031525;
   padding: 0.3em 0.6em;
-  margin: 0.2em;
+  margin: 1em 0.2em;
   min-height: 2.55rem;
   transition: background-color 0.1s ease;
   cursor: pointer;
