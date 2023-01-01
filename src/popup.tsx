@@ -26,7 +26,7 @@ const Popup = () => {
       return {
         status: "Active",
         description: "Replacing images with Becky G!",
-        quote: "Vamos! No hay garantía aqui, pero yo creo en ti!",
+        quote: "Vamos! Yo creo en ti!",
       };
     }
 
