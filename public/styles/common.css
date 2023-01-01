@@ -1,0 +1,32 @@
+body {
+  background-color: rgb(235, 235, 235);
+  color: #444;
+  font-size: 14px;
+  padding: 0.1em 0.6em;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  background-color: #58cc02;
+  color: #fff;
+  justify-content: center;
+  border: none;
+  border-bottom: 2px solid #459e00;
+  padding: 0.8em 0.6em;
+  margin: 1em 0.2em;
+  transition: background-color 0.1s ease;
+  cursor: pointer;
+  font-weight: bold;
+  text-shadow: 0 0 3px #224e00;
+}
+
+button:hover {
+  background-color: #4ea80a;
+  text-decoration: underline;
+}
+
+input[type="checkbox"] {
+  height: 1.3em;
+  width: 1.3em;
+}

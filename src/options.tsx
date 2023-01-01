@@ -65,10 +65,11 @@ const Options = () => {
 
   return (
     <div>
+      <p>Select which images to be replaced</p>
       <div className="options">
+        <h3 className="title">Images</h3>
         {allTargetSelectors.map(({ label }) => (
           <label key={label} className="option">
-            {label}
             <input
               type="checkbox"
               className="option-checkbox"
@@ -77,11 +78,12 @@ const Options = () => {
               )}
               onChange={() => toggleOption(label)}
             />
+            <span className="option-text">{label}</span>
           </label>
         ))}
       </div>
 
-      <div>{status}</div>
+      {status && <div className="status">{status}</div>}
       <button onClick={saveOptions}>Save</button>
     </div>
   );

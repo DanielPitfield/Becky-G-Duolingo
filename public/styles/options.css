@@ -1,14 +1,30 @@
 .options {
   font-family: inherit;
-  font-size: 16px;
+  padding: 0.8em;
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+  background-color: #f7f7f7;
+}
+
+.options .title {
+  margin: 0;
+  font-size: 1em;
+  margin-bottom: 1em;
 }
 
 .option {
   display: flex;
-  margin:  0 0.5em 0.5em;
+  margin: 0.5em 0;
+  cursor: pointer;
+  align-items: center;
 }
 
 .option-checkbox {
-  margin-left: 0.4em;
-  padding: 0.4em;
+  margin-right: 0.4em;
+}
+
+.status {
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+  background-color: #d2f1d2;
+  margin-top: 0.8em;
+  padding: 0.5em;
 }
