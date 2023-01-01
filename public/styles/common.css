@@ -8,20 +8,21 @@ body {
 button {
   display: flex;
   align-items: center;
-  background-color: #58cc02;
+  background-color: #cc7402;
   color: #fff;
   justify-content: center;
   border: none;
-  border-bottom: 2px solid #459e00;
+  border-bottom: 2px solid #a05b00;
   padding: 0.8em 0.6em;
-  margin: 1em 0.2em;
+  margin: 1em 0;
   transition: background-color 0.1s ease;
   cursor: pointer;
   font-weight: bold;
-  text-shadow: 0 0 3px #224e00;
+  text-shadow: 0 0 3px #a55d00;
 }
+
 button:hover {
-  background-color: #4ea80a;
+  background-color: #b46600;
   text-decoration: underline;
 }
 
