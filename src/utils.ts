@@ -24,7 +24,7 @@ export function getEnabledTargetSelectors() {
   return allTargetSelectors;
 }
 
-function getRandomBeckyGImageURL(): string {
+export function getRandomBeckyGImageURL(): string {
   const randomIndex: number = Math.floor(Math.random() * beckyImages.length);
   return beckyImages[randomIndex];
 }

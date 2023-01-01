@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { beckyImages } from "./data";
+import { getRandomBeckyGImageURL } from "./utils";
 
 const Popup = () => {
   const TARGET_URL = "https://www.duolingo.com";
   const [currentURL, setCurrentURL] = useState<string>("");
+  const beckyImageURL = useRef<string>(getRandomBeckyGImageURL());
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -56,7 +57,7 @@ const Popup = () => {
         </button>
       )}
 
-      <img src={beckyImages[0]} width={300} height={300} />
+      <img src={beckyImageURL.current} width={300} height={300} />
       <div className="becky-quote">{quote}</div>
     </div>
   );
