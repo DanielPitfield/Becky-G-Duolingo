@@ -1,24 +1,24 @@
 import { allTargetSelectors, beckyImages } from "./data";
 
 // Get the target selectors which are enabled in the options
-export function getEnabledTargetSelectors() {
-  chrome.storage.sync.get("targetSelectorOptions", (item) => {
-    // If a storage entry exists
-    if (item.targetSelectorOptions) {
-      // Deserialise the JSON
-      const targetSelectorOptions: { label: string; isEnabled: boolean }[] =
-        JSON.parse(item.targetSelectorOptions);
+export async function getEnabledTargetSelectors() {
+  const item = await chrome.storage.sync.get("targetSelectorOptions");
 
-      // The target selectors of the enabled options
-      const enabledTargetSelectors = allTargetSelectors.filter((selector) => {
-        return targetSelectorOptions.find(
-          (option) => option.label === selector.label
-        )?.isEnabled;
-      });
+  // If a storage entry exists
+  if (item.targetSelectorOptions) {
+    // Deserialise the JSON
+    const targetSelectorOptions: { label: string; isEnabled: boolean }[] =
+      JSON.parse(item.targetSelectorOptions);
 
-      return enabledTargetSelectors;
-    }
-  });
+    // The target selectors of the enabled options
+    const enabledTargetSelectors = allTargetSelectors.filter((selector) => {
+      return targetSelectorOptions.find(
+        (option) => option.label === selector.label
+      )?.isEnabled;
+    });
+
+    return enabledTargetSelectors;
+  }
 
   // Otherwise, all selectors are enabled
   return allTargetSelectors;

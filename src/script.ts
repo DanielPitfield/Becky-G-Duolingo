@@ -1,18 +1,18 @@
 import { getEnabledTargetSelectors, createImage } from "./utils";
 
-// Hide all image elements that match an enabled CSS selector (until they are replaced)
-getEnabledTargetSelectors().forEach(({ selector }) => {
-  const styleElement = document.createElement("style");
-  styleElement.textContent = `${selector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
-  document.head.appendChild(styleElement);
-});
+(async () => {
+  // Hide all image elements that match an enabled CSS selector (until they are replaced)
+  (await getEnabledTargetSelectors()).forEach(({ selector }) => {
+    const styleElement = document.createElement("style");
+    styleElement.textContent = `${selector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
+    document.head.appendChild(styleElement);
+  });
+})();
 
-function replaceImages() {
+async function replaceImages() {
   // Get all the elements that match an enabled CSS selector
   const targetImages: NodeListOf<Element> = document.querySelectorAll(
-    getEnabledTargetSelectors()
-      .map((x) => x.selector)
-      .join(",")
+    (await getEnabledTargetSelectors()).map((x) => x.selector).join(",")
   );
 
   // Only the image elements which haven't already been replaced

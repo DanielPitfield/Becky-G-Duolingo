@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { allTargetSelectors } from "./data";
+import { getEnabledTargetSelectors } from "./utils";
 
 const Options = () => {
   // All target selectors are enabled by default
@@ -16,13 +17,11 @@ const Options = () => {
 
   // Restores the state of the selected options (using the preferences stored in chrome.storage)
   useEffect(() => {
-    chrome.storage.sync.get("targetSelectorOptions", (item) => {
-      // If a storage entry exists
-      if (item.targetSelectorOptions) {
-        // Deserialise the JSON and set the options
-        setTargetSelectorOptions(JSON.parse(item.targetSelectorOptions));
-      }
-    });
+    getEnabledTargetSelectors().then((selectors) =>
+      setTargetSelectorOptions(
+        selectors.map((x) => ({ ...x, isEnabled: true }))
+      )
+    );
   }, []);
 
   // Update status message to show options have been saved
@@ -38,18 +37,22 @@ const Options = () => {
   }
 
   // Saves options to chrome.storage
-  function saveOptions() {
-    chrome.storage.sync.set(
-      { targetSelectorOptions: JSON.stringify(targetSelectorOptions) },
-      showConfirmation
-    );
+  async function saveOptions() {
+    await chrome.storage.sync.set({
+      targetSelectorOptions: JSON.stringify(targetSelectorOptions),
+    });
+
+    showConfirmation();
   }
 
   function toggleOption(label: string) {
     // Find the option being changed in targetSelectorOptions
     const changedOption = targetSelectorOptions.find(
       (option) => option.label === label
-    );
+    ) || {
+      label,
+      isEnabled: false,
+    };
 
     // Toggle enabled status
     if (changedOption) {
@@ -76,7 +79,7 @@ const Options = () => {
               checked={targetSelectorOptions?.some(
                 (option) => option.label === label && option.isEnabled
               )}
-              onChange={() => toggleOption(label)}
+              onClick={() => toggleOption(label)}
             />
             <span className="option-text">{label}</span>
           </label>
