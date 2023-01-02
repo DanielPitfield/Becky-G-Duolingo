@@ -1,5 +1,7 @@
 export type TargetSelector = { selector: string; label: string };
 
+export const TARGET_URL = "https://www.duolingo.com";
+
 export const beckyImages: string[] = [
   chrome.runtime.getURL("images/becky1.jpg"),
   chrome.runtime.getURL("images/becky2.jpg"),

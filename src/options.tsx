@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { allTargetSelectors } from "./data";
+import useIsTargetURL from "./useIsTargetURL";
 import { getEnabledTargetSelectors } from "./utils";
 
 const Options = () => {
+  const isTargetURL = useIsTargetURL();
+
   // All target selectors are enabled by default
   const defaultTargetSelectorOptions = allTargetSelectors.map(({ label }) => {
     return { label, isEnabled: true };
@@ -26,12 +29,12 @@ const Options = () => {
 
   // Update status message to show options have been saved
   function showConfirmation() {
-    setStatus("Options saved.");
+    setStatus(`Options saved. ${isTargetURL ? "Refresh Duolingo." : ""}`);
 
     // Clear status message
     const id = setTimeout(() => {
       setStatus("");
-    }, 1000);
+    }, 5000);
 
     return () => clearTimeout(id);
   }

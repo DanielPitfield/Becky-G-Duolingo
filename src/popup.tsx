@@ -1,27 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { createRoot } from "react-dom/client";
+import { TARGET_URL } from "./data";
+import useIsTargetURL from "./useIsTargetURL";
 import { getRandomBeckyGImageURL } from "./utils";
 
 const Popup = () => {
-  const TARGET_URL = "https://www.duolingo.com";
-  const [isTargetURL, setIsTargetURL] = useState<boolean>(false);
+  const isTargetURL = useIsTargetURL();
   const beckyImageURL = useRef<string>(getRandomBeckyGImageURL());
-
-  // Is there a tab in the currentWindow which has a Duolingo URL?
-  useEffect(() => {
-    chrome.tabs.query({ currentWindow: true }, (tabs) => {
-      setIsTargetURL(
-        tabs.some((tab) => (tab.url ?? "-").startsWith(TARGET_URL))
-      );
-    });
-  }, []);
 
   function getContent(): {
     status: string;
     description: string;
     quote: string;
   } {
-    // Current tab is Duolingo
     if (isTargetURL) {
       return {
         status: "Active",
@@ -30,7 +21,6 @@ const Popup = () => {
       };
     }
 
-    // Otherwise
     return {
       status: "Not Active",
       description: "Go to Duolingo",
