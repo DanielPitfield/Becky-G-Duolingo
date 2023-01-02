@@ -24,6 +24,10 @@
   background-color: #f0fae7;
 }
 
+.navigate-button {
+  margin: 0 0 1.5em 0;
+}
+
 img {
   border-bottom: none;
   box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
@@ -43,7 +47,7 @@ img {
 }
 
 .description {
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
 }
 
 .becky-quote {  
