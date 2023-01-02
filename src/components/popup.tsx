@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { createRoot } from "react-dom/client";
-import { TARGET_URL } from "./data";
-import useIsTargetURL from "./useIsTargetURL";
-import { getRandomBeckyGImageURL } from "./utils";
+import { TARGET_URL } from "../data";
+import useIsTargetURL from "../hooks/useIsTargetURL";
+import { getRandomBeckyGImageURL } from "../utils";
 
 const Popup = () => {
   const isTargetURL = useIsTargetURL();

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TARGET_URL } from "./data";
+import { TARGET_URL } from "../data";
 
 // Is there a tab in the currentWindow which has a Duolingo URL?
 function useIsTargetURL() {

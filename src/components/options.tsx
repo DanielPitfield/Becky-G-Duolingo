@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { allTargetSelectors } from "./data";
-import useIsTargetURL from "./useIsTargetURL";
-import { getEnabledTargetSelectors } from "./utils";
+import { allTargetSelectors } from "../data";
+import useIsTargetURL from "../hooks/useIsTargetURL";
+import { getEnabledTargetSelectors } from "../utils";
 
 const Options = () => {
   const isTargetURL = useIsTargetURL();
