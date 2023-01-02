@@ -4,17 +4,14 @@ import { getRandomBeckyGImageURL } from "./utils";
 
 const Popup = () => {
   const TARGET_URL = "https://www.duolingo.com";
-  const [currentURL, setCurrentURL] = useState<string>("");
+  const [isTargetURL, setIsTargetURL] = useState<boolean>(false);
   const beckyImageURL = useRef<string>(getRandomBeckyGImageURL());
 
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      setCurrentURL(tabs[0].url ?? "-");
+      setIsTargetURL((tabs[0].url ?? "-").startsWith(TARGET_URL));
     });
   }, []);
-
-  // Is the active tab Duolingo?
-  const isTargetURL = currentURL.startsWith(TARGET_URL);
 
   function getContent(): {
     status: string;
