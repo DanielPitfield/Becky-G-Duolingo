@@ -7,9 +7,12 @@ const Popup = () => {
   const [isTargetURL, setIsTargetURL] = useState<boolean>(false);
   const beckyImageURL = useRef<string>(getRandomBeckyGImageURL());
 
+  // Is there a tab in the currentWindow which has a Duolingo URL?
   useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      setIsTargetURL((tabs[0].url ?? "-").startsWith(TARGET_URL));
+    chrome.tabs.query({ currentWindow: true }, (tabs) => {
+      setIsTargetURL(
+        tabs.some((tab) => (tab.url ?? "-").startsWith(TARGET_URL))
+      );
     });
   }, []);
 
