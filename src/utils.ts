@@ -11,13 +11,10 @@ export async function getEnabledTargetSelectors() {
       JSON.parse(item.targetSelectorOptions);
 
     // The target selectors of the enabled options
-    const enabledTargetSelectors = allTargetSelectors.filter((selector) => {
-      return targetSelectorOptions.find(
-        (option) => option.label === selector.label
-      )?.isEnabled;
+    return allTargetSelectors.filter((selector) => {
+      targetSelectorOptions.find((option) => option.label === selector.label)
+        ?.isEnabled;
     });
-
-    return enabledTargetSelectors;
   }
 
   // Otherwise, all selectors are enabled
