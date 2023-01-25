@@ -5,7 +5,7 @@ Chrome extension to replace the cartoony images on Duolingo with Becky G!
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![CSS3](https://img.shields.io/badge/css-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
-<img align="left" src="https://github.com/DanielPitfield/danielpitfield.github.io/blob/main/public/Images/Projects/beckyGDuolingo.png" alt="Becky G Duolingo" width="400"/>
+<img align="left" src="https://raw.githubusercontent.com/DanielPitfield/danielpitfield.github.io/main/public/Images/Projects/beckyGDuolingo.png" alt="Becky G Duolingo" width="400"/>
 <img src="./public/images/becky3.jpg" alt="Becky G" width="400">
 
 ## Usage / Instructions
