@@ -17,14 +17,14 @@ const Popup = () => {
       return {
         status: "Active",
         description: "Replacing images with Becky G!",
-        quote: "Vamos! Yo creo en ti!",
+        quote: "¡Vamos! ¡Yo creo en ti!",
       };
     }
 
     return {
       status: "Not Active",
       description: "Go to Duolingo",
-      quote: "Quieres aprender español conmigo?",
+      quote: "¿Quieres aprender español conmigo?",
     };
   }
 
