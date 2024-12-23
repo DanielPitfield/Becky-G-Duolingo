@@ -1,15 +1,24 @@
 import { createImage, getEnabledTargetSelectors } from "./utils";
 
-function observe(selectors: string[]) {
+function observe(selectors: string[]): {
+  getActiveSelectors: () => string[];
+  update: (newSelectors: string[]) => void;
+} & {
+  imageObserver?: IntersectionObserver;
+} {
   let observer: MutationObserver | null = null;
+  let imageObserver: IntersectionObserver | undefined;
 
   function updateSelectors(newSelectors: string[]) {
-    // Disconnect existing observer if any
+    // Disconnect existing observers if any
     if (observer) {
       observer.disconnect();
     }
+    if (imageObserver) {
+      imageObserver.disconnect();
+    }
 
-    // Create a new observer or reuse the existing one
+    // Create a new MutationObserver
     observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === "childList") {
@@ -43,7 +52,44 @@ function observe(selectors: string[]) {
     });
 
     // Start observing with the new selectors
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // Create and start IntersectionObserver for images
+    const options = {
+      root: null, // viewport
+      rootMargin: "0px",
+      threshold: 0.1,
+    };
+
+    imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (
+          entry.isIntersecting &&
+          !entry.target.hasAttribute("data-is-image-replaced") &&
+          entry.target.parentElement
+        ) {
+          // Keep and add to the styling of the container
+          entry.target.parentElement.style.cssText +=
+            "display: flex; align-items: center; justify-content: center;";
+
+          // Replace old image element with new image element
+          const newImage = createImage();
+          entry.target.parentElement.replaceChild(newImage, entry.target);
+          newImage.setAttribute("data-is-image-replaced", "true");
+        }
+      });
+    }, options);
+
+    // Observe all images with the selector
+    document.querySelectorAll(selectors.join(",")).forEach((element) => {
+      if (!(element instanceof HTMLImageElement)) {
+        throw new Error(`Expected an image element, got ${element.tagName}`);
+      }
+      imageObserver?.observe(element);
+    });
   }
 
   updateSelectors(selectors);
