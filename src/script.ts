@@ -1,8 +1,13 @@
+import type { TargetSelector } from "./data";
 import { getEnabledTargetSelectors, createImage } from "./utils";
+
+const selectors = await (async (): Promise<TargetSelector[]> => {
+  return getEnabledTargetSelectors();
+})();
 
 (async () => {
   // Hide all image elements that match an enabled CSS selector (until they are replaced)
-  (await getEnabledTargetSelectors()).forEach(({ selector }) => {
+  selectors.forEach(({ selector }) => {
     const styleElement = document.createElement("style");
     styleElement.textContent = `${selector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
     document.head.appendChild(styleElement);
@@ -12,17 +17,17 @@ import { getEnabledTargetSelectors, createImage } from "./utils";
 async function replaceImages() {
   // Get all the elements that match an enabled CSS selector
   const targetImages: NodeListOf<Element> = document.querySelectorAll(
-    (await getEnabledTargetSelectors()).map((x) => x.selector).join(",")
+    selectors.map((x) => x.selector).join(",")
   );
 
   // Only the image elements which haven't already been replaced
-  const targetImagesFiltered: Element[] = Array.from(targetImages).filter(
-    (image) => image.getAttribute("data-is-image-replaced") === null
+  const filteredTargetImages: Element[] = Array.from(targetImages).filter(
+    (image) => !image.getAttribute("data-is-image-replaced")
   );
 
-  for (const image of targetImagesFiltered) {
+  for (const image of filteredTargetImages) {
     // Don't replace the image, if there is no container
-    if (image.parentElement === null) {
+    if (!image.parentElement) {
       continue;
     }
 
