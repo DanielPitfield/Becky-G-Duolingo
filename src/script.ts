@@ -1,42 +1,68 @@
-import { getEnabledTargetSelectors, createImage } from "./utils";
+import { createImage, getEnabledTargetSelectors } from "./utils";
 
-(async () => {
-  // Hide all image elements that match an enabled CSS selector (until they are replaced)
-  (await getEnabledTargetSelectors()).forEach(({ selector }) => {
-    const styleElement = document.createElement("style");
-    styleElement.textContent = `${selector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
-    document.head.appendChild(styleElement);
-  });
-})();
+function observe(selectors: string[]) {
+  let observer: MutationObserver | null = null;
 
-async function replaceImages() {
-  // Get all the elements that match an enabled CSS selector
-  const targetImages: NodeListOf<Element> = document.querySelectorAll(
-    (await getEnabledTargetSelectors()).map((x) => x.selector).join(",")
-  );
-
-  // Only the image elements which haven't already been replaced
-  const targetImagesFiltered: Element[] = Array.from(targetImages).filter(
-    (image) => image.getAttribute("data-is-image-replaced") === null
-  );
-
-  for (const image of targetImagesFiltered) {
-    // Don't replace the image, if there is no container
-    if (image.parentElement === null) {
-      continue;
+  function updateSelectors(newSelectors: string[]) {
+    // Disconnect existing observer if any
+    if (observer) {
+      observer.disconnect();
     }
 
-    // Keep and add to the styling of the container
-    image.parentElement.style.cssText +=
-      "display: flex; align-items: center; justify-content: center;";
+    // Create a new observer or reuse the existing one
+    observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+          mutation.addedNodes.forEach((node) => {
+            const shouldReplace =
+              // Element type
+              node.nodeType === Node.ELEMENT_NODE &&
+              // Selector
+              newSelectors.some((selector) =>
+                (node as Element).matches(selector)
+              ) &&
+              // Attribute
+              (node as Element).getAttribute("data-is-image-replaced") ===
+                null &&
+              // Container
+              node.parentElement;
 
-    // Replace old image element with new image element
-    const newImage = createImage();
-    image.parentElement.replaceChild(newImage, image);
-    newImage.setAttribute("data-is-image-replaced", "true");
+            if (shouldReplace) {
+              // Keep and add to the styling of the container
+              node.parentElement.style.cssText +=
+                "display: flex; align-items: center; justify-content: center;";
+
+              // Replace old image element with new image element
+              const newImage = createImage();
+              node.parentElement.replaceChild(newImage, node);
+              newImage.setAttribute("data-is-image-replaced", "true");
+            }
+          });
+        }
+      });
+    });
+
+    // Start observing with the new selectors
+    observer.observe(document.body, { childList: true, subtree: true });
   }
+
+  updateSelectors(selectors);
+
+  return {
+    getActiveSelectors: () => selectors,
+    update: (newSelectors: string[]) => {
+      selectors = newSelectors;
+      updateSelectors(newSelectors);
+    },
+  };
 }
 
-// Periodically look for any image elements that need replacing
-const CHECK_INTERVAL_MS = 100;
-setInterval(replaceImages, CHECK_INTERVAL_MS);
+(async () => {
+  const selectors = await getEnabledTargetSelectors();
+  const imageObserver = observe(selectors.map((x) => x.selector));
+
+  chrome.storage.onChanged.addListener(async (changes, namespace) => {
+    const selectors = await getEnabledTargetSelectors();
+    imageObserver.update(selectors.map((x) => x.selector));
+  });
+})();
