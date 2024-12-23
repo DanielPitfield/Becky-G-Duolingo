@@ -32,14 +32,10 @@ function observe(selectors: string[]): {
     mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === "childList") {
-          mutation.addedNodes.forEach((node) => {
-            const shouldReplace =
-              // Element type
-              node.nodeType === Node.ELEMENT_NODE &&
-              // Selector
-              newSelectors.some((selector) =>
-                (node as Element).matches(selector)
-              );
+          Array.from(mutation.addedNodes).forEach((node) => {
+            const shouldReplace = newSelectors.some((selector) =>
+              (node as Element).matches(selector)
+            );
 
             if (shouldReplace) {
               replaceImage(node);
@@ -61,7 +57,7 @@ function observe(selectors: string[]): {
     }, intersectionObserverOptions);
 
     const nodes = document.querySelectorAll(selectors.join(","));
-    nodes.forEach((node) => intersectionObserver?.observe(node));
+    Array.from(nodes).forEach((node) => intersectionObserver?.observe(node));
   }
 
   updateSelectors(selectors);
