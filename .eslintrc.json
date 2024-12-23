@@ -1,0 +1,13 @@
+{
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parserOptions": {
+        "project": "tsconfig.json"
+      }
+    }
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
