@@ -1,25 +1,35 @@
 import { createImage, getEnabledTargetSelectors } from "./utils";
 
+const mutationObserverOptions: MutationObserverInit = {
+  childList: true,
+  subtree: true,
+};
+
+const intersectionObserverOptions: IntersectionObserverInit = {
+  root: null,
+  rootMargin: "0px",
+  threshold: 0.1,
+};
+
 function observe(selectors: string[]): {
   getActiveSelectors: () => string[];
   update: (newSelectors: string[]) => void;
-} & {
-  imageObserver?: IntersectionObserver;
 } {
-  let observer: MutationObserver | null = null;
-  let imageObserver: IntersectionObserver | undefined;
+  let mutationObserver: MutationObserver | undefined;
+  let intersectionObserver: IntersectionObserver | undefined;
 
   function updateSelectors(newSelectors: string[]) {
-    // Disconnect existing observers if any
-    if (observer) {
-      observer.disconnect();
+    // Disconnect existing observers
+    if (mutationObserver) {
+      mutationObserver.disconnect();
     }
-    if (imageObserver) {
-      imageObserver.disconnect();
+
+    if (intersectionObserver) {
+      intersectionObserver.disconnect();
     }
 
     // Create a new MutationObserver
-    observer = new MutationObserver((mutations) => {
+    mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === "childList") {
           mutation.addedNodes.forEach((node) => {
@@ -29,67 +39,29 @@ function observe(selectors: string[]): {
               // Selector
               newSelectors.some((selector) =>
                 (node as Element).matches(selector)
-              ) &&
-              // Attribute
-              (node as Element).getAttribute("data-is-image-replaced") ===
-                null &&
-              // Container
-              node.parentElement;
+              );
 
             if (shouldReplace) {
-              // Keep and add to the styling of the container
-              node.parentElement.style.cssText +=
-                "display: flex; align-items: center; justify-content: center;";
-
-              // Replace old image element with new image element
-              const newImage = createImage();
-              node.parentElement.replaceChild(newImage, node);
-              newImage.setAttribute("data-is-image-replaced", "true");
+              replaceImage(node);
             }
           });
         }
       });
     });
 
-    // Start observing with the new selectors
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    mutationObserver.observe(document.body, mutationObserverOptions);
 
-    // Create and start IntersectionObserver for images
-    const options = {
-      root: null, // viewport
-      rootMargin: "0px",
-      threshold: 0.1,
-    };
-
-    imageObserver = new IntersectionObserver((entries) => {
+    // Create a new IntersectionObserver
+    intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (
-          entry.isIntersecting &&
-          !entry.target.hasAttribute("data-is-image-replaced") &&
-          entry.target.parentElement
-        ) {
-          // Keep and add to the styling of the container
-          entry.target.parentElement.style.cssText +=
-            "display: flex; align-items: center; justify-content: center;";
-
-          // Replace old image element with new image element
-          const newImage = createImage();
-          entry.target.parentElement.replaceChild(newImage, entry.target);
-          newImage.setAttribute("data-is-image-replaced", "true");
+        if (entry.isIntersecting) {
+          replaceImage(entry.target);
         }
       });
-    }, options);
+    }, intersectionObserverOptions);
 
-    // Observe all images with the selector
-    document.querySelectorAll(selectors.join(",")).forEach((element) => {
-      if (!(element instanceof HTMLImageElement)) {
-        throw new Error(`Expected an image element, got ${element.tagName}`);
-      }
-      imageObserver?.observe(element);
-    });
+    const nodes = document.querySelectorAll(selectors.join(","));
+    nodes.forEach((node) => intersectionObserver?.observe(node));
   }
 
   updateSelectors(selectors);
@@ -101,6 +73,25 @@ function observe(selectors: string[]): {
       updateSelectors(newSelectors);
     },
   };
+}
+
+function replaceImage(node: Node) {
+  if (!node.parentElement) {
+    return;
+  }
+
+  if ((node as Element).hasAttribute("data-is-image-replaced")) {
+    return;
+  }
+
+  // Keep and add to the styling of the container
+  node.parentElement.style.cssText +=
+    "display: flex; align-items: center; justify-content: center;";
+
+  // Replace old image element with new image element
+  const newImage = createImage();
+  node.parentElement.replaceChild(newImage, node);
+  newImage.setAttribute("data-is-image-replaced", "true");
 }
 
 (async () => {
