@@ -14,9 +14,9 @@ export const beckyImages: string[] = [
 ];
 
 export const allTargetSelectors: TargetSelector[] = [
-  { selector: "._1cRje", label: "Level path" },
-  { selector: ".F2B9m > div", label: "Questions" },
-  { selector: "._1S4zC", label: "Loading level" },
+  { selector: "._1bppN", label: "Level path" },
+  { selector: "._2qg6J > div", label: "Questions" },
+  { selector: "._3vn2U", label: "Loading level" },
   { selector: "._2IFQ2", label: "Review reminders" },
   { selector: "._2WUmd", label: "Section test (start)" },
   { selector: "._2AWAc", label: "Section test (end)" },
