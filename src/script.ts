@@ -1,13 +1,13 @@
-import type { TargetSelector } from "./data";
 import { getEnabledTargetSelectors, createImage } from "./utils";
 
-const selectors = await (async (): Promise<TargetSelector[]> => {
-  return getEnabledTargetSelectors();
+const selectors = await (async (): Promise<string[]> => {
+  const targetSelectorOptions = await getEnabledTargetSelectors();
+  return targetSelectorOptions.flatMap(({ selectors }) => selectors);
 })();
 
 (async () => {
   // Hide all image elements that match an enabled CSS selector (until they are replaced)
-  selectors.forEach(({ selector }) => {
+  selectors.forEach((selector) => {
     const styleElement = document.createElement("style");
     styleElement.textContent = `${selector}:not([data-is-image-replaced="true"]) { visibility: hidden; }`;
     document.head.appendChild(styleElement);
@@ -16,7 +16,7 @@ const selectors = await (async (): Promise<TargetSelector[]> => {
 
 async function replaceImages() {
   // Get all the elements that match an enabled CSS selector
-  const targetImages: NodeListOf<Element> = document.querySelectorAll(selectors.map((x) => x.selector).join(","));
+  const targetImages: NodeListOf<Element> = document.querySelectorAll(selectors.join(","));
 
   // Only the image elements which haven't already been replaced
   const filteredTargetImages: Element[] = Array.from(targetImages).filter(

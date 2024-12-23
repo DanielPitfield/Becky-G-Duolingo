@@ -1,4 +1,4 @@
-export type TargetSelector = { selector: string; label: string };
+export type TargetSelector = { selectors: string[]; label: string };
 
 export const TARGET_URL = "https://www.duolingo.com";
 
@@ -14,10 +14,10 @@ export const beckyImages: string[] = [
 ];
 
 export const allTargetSelectors: TargetSelector[] = [
-  { selector: "._1bppN", label: "Level path" },
-  { selector: "._2qg6J > div", label: "Questions" },
-  { selector: "._3vn2U", label: "Loading level" },
-  { selector: "._2IFQ2", label: "Review reminders" },
-  { selector: "._2WUmd", label: "Section test (start)" },
-  { selector: "._2AWAc", label: "Section test (end)" },
+  { selectors: ["._1bppN"], label: "Level path" },
+  { selectors: ["._2qg6J > div"], label: "Questions" },
+  { selectors: ["._3vn2U"], label: "Loading level" },
+  { selectors: ["._2IFQ2"], label: "Review reminders" },
+  { selectors: ["._2WUmd"], label: "Section test (start)" },
+  { selectors: ["._2AWAc"], label: "Section test (end)" },
 ];
