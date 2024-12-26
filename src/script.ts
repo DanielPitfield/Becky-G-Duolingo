@@ -1,7 +1,7 @@
 import { getEnabledTargetSelectors, createImage } from "./utils";
 
 const selectors = (await getEnabledTargetSelectors()).flatMap(({ selectors }) => selectors);
-const CHECK_INTERVAL_MS = 100;
+const CHECK_INTERVAL_MS = 500;
 
 // Periodically look for any image elements that need replacing
 setInterval(replaceImages, CHECK_INTERVAL_MS);
