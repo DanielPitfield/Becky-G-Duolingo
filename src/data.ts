@@ -17,7 +17,7 @@ export const allTargetSelectors: TargetSelector[] = [
   { selectors: ["._1bppN"], label: "Level path" },
   { selectors: ["._3vn2U"], label: "Loading level" },
   { selectors: ["._2qg6J > div", "._2rgPQ", "._1CuPQ", "._2Zqm-"], label: "Questions" },
-  { selectors: ["._1UGd5", "._1JaQ9", "._1XNQX", "._3V6my"], label: "Responses" },
+  { selectors: ["._1UGd5", "._1JaQ9", "._3V6my"], label: "Responses" },
   { selectors: ["._2IFQ2", ".CX0-j"], label: "Review reminders" },
   { selectors: ["._3SXFk > div", "._3BHJN", "._3-GFU", "._2AWAc", "._5PDF2"], label: "Section test" },
 ];
