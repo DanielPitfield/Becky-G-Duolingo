@@ -1,6 +1,6 @@
 {
   "name": "becky-g-duolingo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Replace all cartoony images on Duolingo with Becky G!",
   "main": "index.js",
