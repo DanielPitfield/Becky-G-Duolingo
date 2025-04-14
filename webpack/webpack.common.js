@@ -10,6 +10,7 @@ export default {
     popup: path.join(srcDir, "components/popup.tsx"),
     options: path.join(srcDir, "components/options.tsx"),
     content_script: path.join(srcDir, "script.ts"),
+    background: path.join(srcDir, "background.ts"),
   },
   output: {
     path: path.join(__dirname, "../dist/js"),

@@ -6,6 +6,9 @@ const CHECK_INTERVAL_MS = 500;
 // Periodically look for any image elements that need replacing
 setInterval(replaceImages, CHECK_INTERVAL_MS);
 
+// Periodically look for any speaker icons that when clicked should speak the question text using Becky G's voice!
+setInterval(speakQuestion, CHECK_INTERVAL_MS);
+
 // Hide all image elements that match an enabled CSS selector (until they are replaced)
 selectors.forEach((selector) => {
   const styleElement = document.createElement("style");
@@ -31,4 +34,36 @@ async function replaceImages() {
     image.parentElement!.replaceChild(newImage, image);
     newImage.setAttribute("data-is-image-replaced", "true");
   });
+}
+
+async function speakQuestion() {
+  const speakerIcon: Element | null = document.querySelector('[style*="--animated-speaker-icon-color"]');
+  console.log("Speaker icon: ", speakerIcon);
+
+  if (!speakerIcon) {
+    return;
+  }
+
+  const questionText = document.querySelector('span[lang="es"]')?.textContent;
+  console.log("Question text: ", questionText);
+
+  if (!questionText) {
+    return;
+  }
+
+  // Remove existing listeners to prevent duplicates
+  speakerIcon.removeEventListener("click", () =>
+    // Must send event to background script, chrome.tts API can't be accessed within content script!
+    chrome.runtime.sendMessage({
+      action: "speak",
+      text: questionText,
+    })
+  );
+
+  speakerIcon.addEventListener("click", () =>
+    chrome.runtime.sendMessage({
+      action: "speak",
+      text: questionText,
+    })
+  );
 }

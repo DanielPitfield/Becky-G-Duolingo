@@ -5,6 +5,10 @@
   "version": "1.0.1",
   "description": "Replace all the cartoony images on Duolingo with Becky G!",
 
+  "background": {
+    "service_worker": "js/background.js"
+  },
+
   "options_ui": {
     "page": "options.html"
   },
@@ -29,7 +33,7 @@
     }
   ],
 
-  "permissions": ["tabs", "storage"],
+  "permissions": ["tabs", "storage", "tts"],
 
   "icons": {
     "16": "icon.png",
