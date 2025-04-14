@@ -52,18 +52,22 @@ async function speakQuestion() {
   }
 
   // Remove existing listeners to prevent duplicates
-  speakerIcon.removeEventListener("click", () =>
-    // Must send event to background script, chrome.tts API can't be accessed within content script!
-    chrome.runtime.sendMessage({
-      action: "speak",
-      text: questionText,
-    })
-  );
+  speakerIcon.removeEventListener("click", (e) => handleSpeakerClick(e, questionText));
+  speakerIcon.addEventListener("click", (e) => handleSpeakerClick(e, questionText));
+}
 
-  speakerIcon.addEventListener("click", () =>
-    chrome.runtime.sendMessage({
-      action: "speak",
-      text: questionText,
-    })
-  );
+function handleSpeakerClick(event: Event, text: string) {
+  if (!text) {
+    return;
+  }
+
+  // Prevent default behavior (stops Duolingo's TTS)
+  event.preventDefault();
+  event.stopPropagation();
+
+  // Call custom TTS
+  chrome.runtime.sendMessage({
+    action: "speak",
+    text,
+  });
 }
